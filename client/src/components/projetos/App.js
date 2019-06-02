@@ -3,6 +3,10 @@ import Table from './Table';
 import Form from './Form';
 
 class Projetos extends Component {
+    state = {
+        characters: []
+    };
+
     removeCharacter = index => {
         const { characters } = this.state;
 
@@ -11,18 +15,14 @@ class Projetos extends Component {
                 return i !== index;
             })
         });
-    }
-
-    state = {
-        characters: []
-    };
+    }    
 
     handleSubmit = character => {
         this.setState({characters: [...this.state.characters, character]});
     }
 
     componentDidMount() {
-        const url = "http://localhost:1234/projetos/list";
+        const url = "http://localhost:1234/projetos/";
 
         fetch(url)
         .then(result => result.json())
