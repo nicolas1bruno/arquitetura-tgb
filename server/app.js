@@ -3,14 +3,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const informationLog = require('./routes/informationLog.route'); // Imports routes for the informationLog
-const machine = require('./routes/machine.route'); // Imports routes for the informationLog
 const app = express();
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
 //let dev_db_url = 'mongodb://ska:6SdU2JkWuAmZrtP@ds151076.mlab.com:51076/ska';
-let dev_db_url = 'mongodb://localhost:27017/ska';
+let dev_db_url = 'mongodb://localhost:27017/tgb';
 
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
@@ -29,8 +27,9 @@ let allowCrossDomain = function(req, res, next) {
 
 app.use(allowCrossDomain);
 
-app.use('/informations', informationLog);
-app.use('/machines', machine);
+const projeto = require('./routes/projeto.route');
+
+app.use('/projetos', projeto);
 
 let port = 1234;
 

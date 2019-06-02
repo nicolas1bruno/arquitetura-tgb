@@ -21,6 +21,18 @@ class Projetos extends Component {
         this.setState({characters: [...this.state.characters, character]});
     }
 
+    componentDidMount() {
+        const url = "http://localhost:1234/projetos/list";
+
+        fetch(url)
+        .then(result => result.json())
+        .then(result => {
+            this.setState({
+                characters: result                
+            })
+        });
+    }
+
     render() {
         const { characters } = this.state
 
