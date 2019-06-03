@@ -9,15 +9,15 @@ exports.list = function (req, res) {
 exports.new = function (req, res) {
     let projeto = new Projeto(
         {
-            name: req.body.name
+            name: req.body.name            
         }
     );
 
     projeto.save(function (err) {
         if (err) {
-            return next(err);
+            console.log(err);
         }
-        res.send('Projeto Created successfully')
+        res.send('projeto Created successfully')
     })
 };
 
