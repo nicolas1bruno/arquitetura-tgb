@@ -29,14 +29,14 @@ exports.view = function (req, res) {
 };
 
 exports.update = function (req, res) {
-    Projeto.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, projeto) {
+    Projeto.findOneAndUpdate(req.params.id, {$set: req.body}, function (err, projeto) {
         if (err) return next(err);
         res.send('projeto udpated.');
     });
 };
 
 exports.delete = function (req, res) {
-    Projeto.findByIdAndRemove(req.params.id, function (err) {
+    Projeto.findOneAndDelete(req.params.id, function (err) {
         if (err) return next(err);
         res.send('Deleted successfully!');
     })
