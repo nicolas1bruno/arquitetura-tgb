@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Table from './Table';
-import Form from './Form';
+import FormAdd from './Form-Add';
+import FormEdit from './Form-Edit';
 
 class Projetos extends Component {
     state = {
-        characters: []
+        characters: [],
+        editing : false,
+        currentCharacter : {}
     };
-
+    
     removeCharacter = _id => {
         const { characters } = this.state;
         
@@ -35,7 +38,21 @@ class Projetos extends Component {
         });
     }    
 
-    handleSubmit = character => {
+    editCharacter = character => {
+        console.log(character);
+        this.setState({
+            currentCharacter : character,
+            editing : true
+        });
+    }
+    
+    cancelEdit = character => {
+		this.setState({
+            editing : false
+        });
+	}
+
+    handleFormAddSubmit = character => {
         fetch("http://localhost:1234/projetos/", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
@@ -56,6 +73,35 @@ class Projetos extends Component {
         this.setState({characters: [...this.state.characters, character]});    
     }
 
+    handleFormEditSubmit = character => {        
+        fetch("http://localhost:1234/projetos/" + character._id, {
+            method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrer: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(character), // body data type must match "Content-Type" header
+        });
+        
+        const { characters } = this.state;
+        
+        characters.forEach(function (value, index, array) {
+            if(value._id == character._id){
+                array[index] = character;
+            }
+        })
+
+        this.setState({
+            characters: characters,
+            editing : false
+        });
+    }
+
     componentDidMount() {
         const url = "http://localhost:1234/projetos/";
 
@@ -73,11 +119,32 @@ class Projetos extends Component {
 
         return (
             <div className="container">
-                <Table
-                    characterData={characters}
-                    removeCharacter={this.removeCharacter}
-                />
-                <Form handleSubmit={this.handleSubmit} />
+                <div className="flex-row">
+				    <div className="flex-large">
+                        {this.state.editing ? (
+                            <Fragment>
+                                <h2>Editar projeto</h2>
+                                <FormEdit 
+                                    handleSubmit={this.handleFormEditSubmit}
+                                    currentCharacter={this.state.currentCharacter}
+                                    cancelEdit={this.cancelEdit} 
+                                    />
+                            </Fragment>
+                        ) : (
+                            <Fragment>
+                                <h2>Novo projeto</h2>
+                                <FormAdd handleSubmit={this.handleFormAddSubmit} />
+                            </Fragment>
+                        )}                        
+                    </div>
+                    <div className="flex-large">
+                        <Table
+                            characterData={characters}
+                            editCharacter={this.editCharacter}
+                            removeCharacter={this.removeCharacter}
+                        />
+                    </div>
+                </div>                                    
             </div>
         );
     }

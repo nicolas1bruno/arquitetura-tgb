@@ -14,7 +14,8 @@ const TableBody = props => {
     const rows = props.characterData.map((row, index) => {
         return (
             <tr key={index}>
-                <td>{row.name}</td>
+                <td>{row.name}</td>                
+                <td><button onClick={() => props.editCharacter(row)}>Edit</button></td>
                 <td><button onClick={() => props.removeCharacter(row._id)}>Delete</button></td>
             </tr>
         );
@@ -25,13 +26,14 @@ const TableBody = props => {
 
 class Table extends Component {
     render() {
-        const { characterData, removeCharacter } = this.props;
+        const { characterData, editCharacter, removeCharacter } = this.props;
 
         return (
             <table>
                 <TableHeader />
                 <TableBody
                     characterData={characterData}
+                    editCharacter={editCharacter}
                     removeCharacter={removeCharacter}
                 />
             </table>
