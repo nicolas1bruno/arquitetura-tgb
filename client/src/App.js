@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/home/home.component";
 import Projetos from "./components/projetos/App";
+import Obras from "./components/obras/App";
+import Relatorios from "./components/relatorios/App";
 
 class App extends Component {
   render() {
@@ -21,7 +23,10 @@ class App extends Component {
                   <Link to="/projetos" className="nav-link">Projetos</Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/tarefas" className="nav-link">Tarefas</Link>
+                  <Link to="/obras" className="nav-link">Obras</Link>
+                </li>
+                <li className="navbar-item">
+                  <Link to="/relatorios" className="nav-link">Relatórios</Link>
                 </li>
               </ul>
             </div>
@@ -29,6 +34,9 @@ class App extends Component {
 
           <Route path="/" exact component={Home} />          
           <Route path="/projetos" component={Projetos} />
+          <Route path="/obras" component={Obras} />
+          <Route path="/relatorios" component={Relatorios} />
+
         </div>
       </Router>
     );

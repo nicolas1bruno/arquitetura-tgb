@@ -1,14 +1,14 @@
-const Projeto = require('../models/projeto.model');
+const Obra = require('../models/obra.model');
 const Parse = require('json-parse');
 
 exports.list = function (req, res) {
-    Projeto.find({}, function(err, projetos) {
-        res.send(dateFormat(projetos));  
+    Obra.find({}, function(err, obras) {
+        res.send(dateFormat(obras));  
     });
 };
 
 exports.new = function (req, res) {
-    let projeto = new Projeto(
+    let obra = new Obra(
         {
             name: req.body.name,
             type: req.body.type,
@@ -18,35 +18,34 @@ exports.new = function (req, res) {
         }
     );
 
-    projeto.save(function (err) {
+    obra.save(function (err) {
         if (err) {
             console.log(err);
         }
-        res.send('projeto Created successfully')
+        res.send('Obra Created successfully')
     })
 };
 
 exports.view = function (req, res) {
-    Projeto.findById(req.params.id, function (err, projeto) {
+    obra.findById(req.params.id, function (err, obra) {
         if (err) return next(err);
-        res.send(dateFormat(projeto));
+        res.send(dateFormat(obra));
     })
 };
 
 exports.update = function (req, res) {
-    Projeto.findOneAndUpdate(req.params.id, {$set: req.body}, function (err, projeto) {
+    Obra.findOneAndUpdate(req.params.id, {$set: req.body}, function (err, obra) {
         if (err) return next(err);
-        res.send('projeto udpated.');
+        res.send('Obra udpated.');
     });
 };
 
 exports.delete = function (req, res) {
-    Projeto.findOneAndDelete(req.params.id, function (err) {
+    Obra.findOneAndDelete(req.params.id, function (err) {
         if (err) return next(err);
         res.send('Deleted successfully!');
     })
 };
-
 
 function dateFormat(array) {
     let json;

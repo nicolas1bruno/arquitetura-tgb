@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let ProjetoSchema = new Schema({
+let ObraSchema = new Schema({
     name: {type: String},
     type: {type: String},
     status: {type: String},
@@ -11,4 +11,4 @@ let ProjetoSchema = new Schema({
 
 
 // Export the model
-module.exports = mongoose.model('Projeto', ProjetoSchema);
+module.exports = mongoose.model('Obra', ObraSchema);

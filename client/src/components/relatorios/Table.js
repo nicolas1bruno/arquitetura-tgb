@@ -4,11 +4,8 @@ const TableHeader = () => {
     return (
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Tipo</th>
                 <th>Status</th>
-                <th>Editar</th>
-                <th>Excluir</th>
+                <th>Quantidade</th>
             </tr>
         </thead>
     );
@@ -18,11 +15,8 @@ const TableBody = props => {
     const rows = props.characterData.map((row, index) => {
         return (
             <tr key={index}>
-                <td>{row.name}</td>                
-                <td>{row.type}</td>                
-                <td>{row.status}</td>                
-                <td><button onClick={() => props.editCharacter(row)}>Edit</button></td>
-                <td><button onClick={() => props.removeCharacter(row._id)}>Delete</button></td>
+                <td>{row.name}</td>   
+                <td>{row.qtd}</td>              
             </tr>
         );
     });
@@ -32,15 +26,13 @@ const TableBody = props => {
 
 class Table extends Component {
     render() {
-        const { characterData, editCharacter, removeCharacter } = this.props;
+        const { characterData } = this.props;
 
         return (
             <table>
                 <TableHeader />
                 <TableBody
                     characterData={characterData}
-                    editCharacter={editCharacter}
-                    removeCharacter={removeCharacter}
                 />
             </table>
         );
